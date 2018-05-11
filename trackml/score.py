@@ -1,5 +1,4 @@
 """TrackML scoring metric"""
-from __future__ import division
 
 __authors__ = ['Sabrina Amrouche', 'David Rousseau', 'Moritz Kiehn',
                'Ilija Vukotic']
@@ -118,7 +117,7 @@ def score_event(truth, submission):
         Proposed hit/track association. Must have hit_id and track_id columns.
     """
     tracks = _analyze_tracks(truth, submission)
-    purity_rec = tracks['major_nhits'] / tracks['nhits']
-    purity_maj = tracks['major_nhits'] / tracks['major_particle_nhits']
+    purity_rec = numpy.true_divide(tracks['major_nhits'], tracks['nhits'])
+    purity_maj = numpy.true_divide(tracks['major_nhits'], tracks['major_particle_nhits'])
     good_track = (0.5 < purity_rec) & (0.5 < purity_maj)
     return tracks['major_weight'][good_track].sum()
